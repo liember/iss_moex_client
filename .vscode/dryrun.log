@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/liember/Documents/Projects/iss_moex_client'
+make: Leaving directory `/Users/liember/Documents/Projects/iss_moex_client'
+ 
+make: *** No targets specified and no makefile found.  Stop.
+
