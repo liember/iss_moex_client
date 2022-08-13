@@ -1,8 +1,8 @@
-defmodule IssMoexClient do
+defmodule IssMoexClient.Client do
   use Tesla
-  plug(Tesla.Middleware.BaseUrl, "http://iss.moex.com")
-  # plug(Tesla.Middleware.Headers, [{"authorization", "token xyz"}])
 
+  plug(Tesla.Middleware.BaseUrl, "http://iss.moex.com")
+  # plug(Tesla.Middleware.Headers, [{"authorization", "token xyz"}]) TODO maybe add auyh??
   plug(Tesla.Middleware.JSON)
 
   def send_request(request) do
