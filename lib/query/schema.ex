@@ -13,23 +13,8 @@ defmodule IssMoexClient.Query.Schema do
   typedstruct do
     @typedoc "Security"
     field :method, method(), enforce: true
-    field :params, map(), default: %{}
+    field :params, [keyword()], default: []
     field :path, String.t(), enforce: true
     field :payload, map(), default: %{}
-  end
-
-  @spec add_params_to_path(t()) :: t()
-
-  def add_params_to_path(request) do
-    params =
-      request.params
-      |> Enum.filter(fn
-        {_, nil} -> false
-        _ -> true
-      end)
-      |> Enum.map(fn {key, value} -> to_string(key) <> "=" <> to_string(value) end)
-      |> Enum.join("&")
-
-    %{request | path: request.path <> "?" <> params}
   end
 end

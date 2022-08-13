@@ -96,16 +96,13 @@ defmodule IssMoexClient.Securities do
   https://iss.moex.com/iss/reference/214
   """
 
-  @spec aggregates(Security.t(), %{
-          optional(:lang) => lang(),
-          optional(:date) => date()
-        }) :: Security.t()
+  @spec aggregates(Security.t(), [{:lang, lang()} | {:date, date()}]) :: Security.t()
 
-  def aggregates(security, params) do
+  def aggregates(security, params \\ %{}) do
     %Schema{
       method: :get,
       params: params,
-      path: "/iss/securities/" <> String.downcase(security.secid) <> "/aggregates"
+      path: "/iss/securities/" <> String.downcase(security.secid) <> "/aggregates.json"
     }
   end
 
@@ -114,16 +111,13 @@ defmodule IssMoexClient.Securities do
   https://iss.moex.com/iss/reference/13
   """
 
-  @spec get(Security.t(), %{
-          optional(:lang) => lang(),
-          optional(:start) => start()
-        }) :: Security.t()
+  @spec get(Security.t(), [{:lang, lang()} | {:start, start()}]) :: Security.t()
 
-  def get(security, params) do
+  def get(security, params \\ %{}) do
     %Schema{
       method: :get,
       params: params,
-      path: "/iss/securities/" <> security.secid
+      path: "/iss/securities/" <> security.secid <> ".json"
     }
   end
 
@@ -132,16 +126,13 @@ defmodule IssMoexClient.Securities do
   https://iss.moex.com/iss/reference/160
   """
 
-  @spec indices(Security.t(), %{
-          optional(:lang) => lang(),
-          optional(:only_actual) => only_actual()
-        }) :: Schema.t()
+  @spec indices(Security.t(), [{:lang, lang()} | {:only_actual, only_actual()}]) :: Schema.t()
 
-  def indices(security, params) do
+  def indices(security, params \\ %{}) do
     %Schema{
       method: :get,
       params: params,
-      path: "/iss/securities/" <> security.seqid <> "/indices"
+      path: "/iss/securities/" <> security.seqid <> "/indices.json"
     }
   end
 
@@ -150,23 +141,23 @@ defmodule IssMoexClient.Securities do
   https://iss.moex.com/iss/reference/5
   """
 
-  @spec list(%{
-          optional(:q) => q(),
-          optional(:lang) => lang(),
-          optional(:start) => start(),
-          optional(:limit) => limit(),
-          optional(:market) => market(),
-          optional(:engine) => engine(),
-          optional(:group_by) => group_by(),
-          optional(:is_trading) => is_trading(),
-          optional(:group_by_filter) => group_by_filter()
-        }) :: Schema.t()
+  @spec list([
+          {:q, q()}
+          | {:lang, lang()}
+          | {:start, start()}
+          | {:limit, limit()}
+          | {:market, market()}
+          | {:engine, engine()}
+          | {:group_by, group_by()}
+          | {:is_trading, is_trading()}
+          | {:group_by_filter, group_by_filter()}
+        ]) :: Schema.t()
 
-  def list(params) do
+  def list(params \\ []) do
     %Schema{
       method: :get,
       params: params,
-      path: "/iss/securities"
+      path: "/iss/securities.json"
     }
   end
 end

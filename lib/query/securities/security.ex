@@ -1,4 +1,8 @@
 defmodule IssMoexClient.Securities.Security do
+  @moduledoc """
+  TODO задокументировать это
+  """
+
   use TypedStruct
 
   typedstruct do
