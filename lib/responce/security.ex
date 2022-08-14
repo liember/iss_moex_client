@@ -1,4 +1,4 @@
-defmodule IssMoexClient.Securities.Security do
+defmodule Responce.Security do
   @moduledoc """
   TODO задокументировать это
   """
@@ -7,6 +7,21 @@ defmodule IssMoexClient.Securities.Security do
 
   typedstruct do
     @typedoc "Security"
+
+    field :title, String.t()
+    field :market, String.t()
+    field :engine, String.t()
+    field :decimals, String.t()
+    field :history_from, String.t()
+    field :history_till, String.t()
+    field :listed_from, String.t()
+    field :listed_till, String.t()
+    field :is_primary, String.t()
+    field :currencyid, integer()
+    field :board_group_id, integer()
+    field :market_id, integer()
+    field :boardid, integer()
+    field :engine_id, integer()
 
     field :id, integer()
     field :secid, String.t()
@@ -24,20 +39,5 @@ defmodule IssMoexClient.Securities.Security do
     field :group, String.t()
     field :primary_boardid, String.t()
     field :marketprice_boardid, String.t()
-  end
-
-  defp parse_by_cols([], [], res), do: {:ok, res}
-  defp parse_by_cols([], _, _), do: {:error, :size}
-
-  defp parse_by_cols([col | cols], [f | data], res),
-    do: parse_by_cols(cols, data, %{res | col => f})
-
-  def parse(json_respoce) do
-    with cols <- for(col <- json_respoce["securities"]["columns"], do: String.to_atom(col)),
-         data <- json_respoce["securities"]["data"] do
-      data |> Enum.map(fn d -> parse_by_cols(cols, d, %__MODULE__{}) end)
-    else
-      _ -> {:error, :parse_error}
-    end
   end
 end

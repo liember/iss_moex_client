@@ -1,11 +1,4 @@
-defmodule IssMoexClient.Securities do
-  @moduledoc """
-  iss doc: https://iss.moex.com/iss/reference/5
-  """
-
-  alias IssMoexClient.Query.Schema
-  alias IssMoexClient.Securities.Security
-
+defmodule Query.Params do
   @typedoc """
   q Поиск инструмента по части Кода, Названию, ISIN, Идентификатору Эмитента, Номеру гос.регистрации.
     Например: https://iss.moex.com/iss/securities.xml?q=MOEX
@@ -90,74 +83,4 @@ defmodule IssMoexClient.Securities do
   """
 
   @type only_actual :: any()
-
-  @doc """
-  Агрегированные итоги торгов за дату по рынкам
-  https://iss.moex.com/iss/reference/214
-  """
-
-  @spec aggregates(Security.t(), [{:lang, lang()} | {:date, date()}]) :: Security.t()
-
-  def aggregates(security, params \\ %{}) do
-    %Schema{
-      method: :get,
-      params: params,
-      path: "/iss/securities/" <> String.downcase(security.secid) <> "/aggregates.json"
-    }
-  end
-
-  @doc """
-  Получить спецификацию инструмента. Например: https://iss.moex.com/iss/securities/IMOEX.xml
-  https://iss.moex.com/iss/reference/13
-  """
-
-  @spec get(Security.t(), [{:lang, lang()} | {:start, start()}]) :: Security.t()
-
-  def get(security, params \\ %{}) do
-    %Schema{
-      method: :get,
-      params: params,
-      path: "/iss/securities/" <> security.secid <> ".json"
-    }
-  end
-
-  @doc """
-  Список индексов в которые входит бумага
-  https://iss.moex.com/iss/reference/160
-  """
-
-  @spec indices(Security.t(), [{:lang, lang()} | {:only_actual, only_actual()}]) :: Schema.t()
-
-  def indices(security, params \\ %{}) do
-    %Schema{
-      method: :get,
-      params: params,
-      path: "/iss/securities/" <> security.seqid <> "/indices.json"
-    }
-  end
-
-  @doc """
-  Список бумаг торгуемых на московской бирже.
-  https://iss.moex.com/iss/reference/5
-  """
-
-  @spec list([
-          {:q, q()}
-          | {:lang, lang()}
-          | {:start, start()}
-          | {:limit, limit()}
-          | {:market, market()}
-          | {:engine, engine()}
-          | {:group_by, group_by()}
-          | {:is_trading, is_trading()}
-          | {:group_by_filter, group_by_filter()}
-        ]) :: Schema.t()
-
-  def list(params \\ []) do
-    %Schema{
-      method: :get,
-      params: params,
-      path: "/iss/securities.json"
-    }
-  end
 end
