@@ -42,7 +42,7 @@ defmodule Query.Engines do
   https://iss.moex.com/iss/reference/160
   """
 
-  def markets(engine, markets, params \\ %{}) do
+  def market_secstat(engine, market, params \\ %{}) do
     %Schema{
       method: :get,
       params: params,
