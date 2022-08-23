@@ -4,23 +4,21 @@ defmodule Query.Securities do
   """
 
   alias Query.Schema
-  alias Query.Params
+  alias Query.Params, as: Pars
 
   @doc """
   Агрегированные итоги торгов за дату по рынкам
   https://iss.moex.com/iss/reference/214
   """
 
-  @spec aggregates(Security.t(), [{:lang, Params.lang()} | {:date, Params.date()}]) ::
-          Security.t()
+  @spec aggregates(Security.t(), [Pars.lang() | Pars.date()]) :: Schema.t()
 
-  def aggregates(security, params \\ %{}) do
+  def aggregates(security, params \\ []) do
     %Schema{
       method: :get,
       params: params,
       path: "/iss/securities/" <> security.secid <> "/aggregates"
     }
-    |> Schema.release()
   end
 
   @doc """
@@ -28,15 +26,14 @@ defmodule Query.Securities do
   https://iss.moex.com/iss/reference/13
   """
 
-  @spec get(Security.t(), [{:lang, Params.lang()} | {:start, Params.start()}]) :: Security.t()
+  @spec get(Security.t(), [Pars.lang() | Pars.start()]) :: Schema.t()
 
-  def get(security, params \\ %{}) do
+  def get(security, params \\ []) do
     %Schema{
       method: :get,
       params: params,
       path: "/iss/securities/" <> security.secid
     }
-    |> Schema.release()
   end
 
   @doc """
@@ -44,16 +41,14 @@ defmodule Query.Securities do
   https://iss.moex.com/iss/reference/160
   """
 
-  @spec indices(Security.t(), [{:lang, Params.lang()} | {:only_actual, Params.only_actual()}]) ::
-          Schema.t()
+  @spec indices(Security.t(), [Pars.lang() | Pars.only_actual()]) :: Schema.t()
 
-  def indices(security, params \\ %{}) do
+  def indices(security, params \\ []) do
     %Schema{
       method: :get,
       params: params,
       path: "/iss/securities/" <> security.seqid <> "/indices"
     }
-    |> Schema.release()
   end
 
   @doc """
@@ -62,15 +57,15 @@ defmodule Query.Securities do
   """
 
   @spec list([
-          {:q, Params.q()}
-          | {:lang, Params.lang()}
-          | {:start, Params.start()}
-          | {:limit, Params.limit()}
-          | {:market, Params.market()}
-          | {:engine, Params.engine()}
-          | {:group_by, Params.group_by()}
-          | {:is_trading, Params.is_trading()}
-          | {:group_by_filter, Params.group_by_filter()}
+          Pars.q()
+          | Pars.lang()
+          | Pars.start()
+          | Pars.limit()
+          | Pars.market()
+          | Pars.engine()
+          | Pars.group_by()
+          | Pars.is_trading()
+          | Pars.group_by_filter()
         ]) :: Schema.t()
 
   def list(params \\ []) do
@@ -79,6 +74,5 @@ defmodule Query.Securities do
       params: params,
       path: "/iss/securities"
     }
-    |> Schema.release()
   end
 end

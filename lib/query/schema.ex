@@ -10,7 +10,7 @@ defmodule Query.Schema do
   @typedoc """
   HTTP методы в виде атомов
   """
-  @type method :: :get
+  @type method :: :get | :post | :put | :delete
 
   typedstruct do
     @typedoc "Security"
@@ -28,10 +28,5 @@ defmodule Query.Schema do
 
   def release(request) do
     %{request | path: String.downcase(request.path) <> ".json"}
-    |> IssMoexClient.Client.send_request()
-    |> case do
-      {:ok, resp} -> Parser.parse(resp.body)
-      err -> err
-    end
   end
 end

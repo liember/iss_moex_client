@@ -1,18 +1,23 @@
-defmodule IssMoexClient.Client do
+defmodule Client do
   use Tesla
 
-  alias IssMoexClient.Query
+  alias Query.Schema
 
   plug(Tesla.Middleware.BaseUrl, "http://iss.moex.com")
   plug(Tesla.Middleware.JSON)
   plug(Tesla.Middleware.Logger)
 
-  @spec send_request(Query.Schema.t()) :: :ok
+  @spec send_request(Schema.t()) :: {:error, any} | {:ok, Tesla.Env.t()}
 
-  def send_request(request) do
-    case request.method do
-      :get -> get(request.path, query: request.params)
-      _ -> {:error, :unsupported}
+  def send_request(query) do
+    query
+    |> Schema.release()
+    |> case do
+      %Schema{method: :get} = r ->
+        get(r.path, query: r.params)
+
+      _ ->
+        {:error, :undefinde_method}
     end
   end
 end

@@ -1,4 +1,4 @@
-defmodule Responce.Description do
+defmodule Description do
   @moduledoc """
   TODO задокументировать это
   """

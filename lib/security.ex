@@ -1,4 +1,4 @@
-defmodule Responce.Security do
+defmodule Security do
   @moduledoc """
   TODO задокументировать это
   """
@@ -8,6 +8,7 @@ defmodule Responce.Security do
   typedstruct do
     @typedoc "Security"
 
+    field :seqid, String.t()
     field :title, String.t()
     field :market, String.t()
     field :engine, String.t()
