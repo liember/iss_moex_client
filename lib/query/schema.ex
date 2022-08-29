@@ -5,8 +5,6 @@ defmodule Query.Schema do
   TODO описание
   """
 
-  alias Responce.Parser
-
   @typedoc """
   HTTP методы в виде атомов
   """

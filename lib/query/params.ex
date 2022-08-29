@@ -129,8 +129,28 @@ defmodule Query.Params do
 
   # TODO wtf var??? maybe boolean() or integer()
 
-  @type only_actual :: any()
+  @type only_actual :: {:only_actual, any}
 
-  @spec only_actual(any) :: {:only_actual, any}
-  def only_actual(a), do: {:only_actual, a}
+  @spec only_actual(any) :: only_actual
+  def only_actual(any), do: {:only_actual, any}
+
+  @typedoc """
+  Default:
+  Type: var
+  """
+
+  @type show :: {:show, any}
+  @spec show(any) :: show()
+  def show(param), do: {:show, param}
+
+  @typedoc """
+  Показывать обороты за вечернюю сессию
+  Default: 0
+  Type: var
+  """
+
+  @type is_tonight_session :: {:is_tonight_session, 0 | 1}
+  @spec is_tonight_session(boolean) :: is_tonight_session
+  def is_tonight_session(true), do: {:is_tonight_session, 1}
+  def is_tonight_session(false), do: {:is_tonight_session, 0}
 end

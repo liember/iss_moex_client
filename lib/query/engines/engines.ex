@@ -7,6 +7,46 @@ defmodule Query.Engines do
   alias Query.Params
 
   @doc """
+  Получить текущее значение оборотов торговой сессии по рынкам торговой системы
+  Api doc: https://iss.moex.com/iss/reference/95
+  """
+
+  @spec turnovers(String.t() | Engine.t(), [
+          Params.lang()
+          | Params.date()
+          | Params.is_tonight_session()
+        ]) :: Schema.t()
+
+  def turnovers(engine, params) do
+    %Schema{
+      method: :get,
+      params: params,
+      path: "/iss/engines/" <> engine <> "/turnovers"
+    }
+  end
+
+  @doc """
+  Api doc: https://iss.moex.com/iss/reference/634
+  """
+
+  @spec zcyc(
+          String.t() | Engine.t(),
+          [
+            Params.date()
+            | Params.lang()
+            | Params.show()
+          ]
+        ) :: Schema.t()
+
+  def zcyc(engine, params) do
+    %Schema{
+      method: :get,
+      params: params,
+      path: "/iss/engines/" <> engine <> "/zcyc"
+    }
+  end
+
+  @doc """
   Получить описание и режим работы торговой системы.
   Например: https://iss.moex.com/iss/engines/stock.xml
 
